@@ -1,1 +1,3 @@
 # TruckPlug
+TruckPlug is an app made for foodies. This app aims to bring any and all food trucks right to your finger tips. It also comes with a special feature for those foodies who are not sure what they are in the mood for. Stay tuned...
+
