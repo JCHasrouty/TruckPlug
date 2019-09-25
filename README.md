@@ -1,6 +1,4 @@
 # TruckPlug
-[![Contributors][contributors-shield]][contributors-url]
-[![Issues][issues-shield]][issues-url]
 
 An app made for the brave and adventurous foodies.
 
@@ -74,10 +72,10 @@ TruckPlug is an app made for foodies. This app aims to bring any and all food tr
 <!-- ACKNOWLEDGEMENTS -->
 ## Contributors
 
-* [Gustavo Chavez]()
-* [Jean Claude Hasrouty]()
-* [Joseph Castro]()
-* [Vincent Wang]()
+* Gustavo Chavez
+* Jean Claude Hasrouty
+* Joseph Castro
+* Vincent Wang
 
 
 
@@ -85,8 +83,3 @@ TruckPlug is an app made for foodies. This app aims to bring any and all food tr
 
 <!-- MARKDOWN LINKS & IMAGES -->
 <!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/othneildrew/Best-README-Template.svg?style=flat-square
-[contributors-url]: https://github.com/othneildrew/Best-README-Template/graphs/contributors
-[issues-shield]: https://img.shields.io/github/issues/othneildrew/Best-README-Template.svg?style=flat-square
-[issues-url]: https://github.com/othneildrew/Best-README-Template/issues
-[product-screenshot]: images/screenshot.png
