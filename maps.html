@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        #map {
+            height: 700px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<h3>TRUCK PLUG</h3>
+<div id="map"></div>
+<script>
+    function initMap() {
+        var uluru = {lat: 34.052235, lng: -118.243683};
+        var staplescenter = {lat: 34.043018, lng: -118.267258}
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 13,
+            center: uluru
+        });
+        var marker = new google.maps.Marker({
+            position: uluru,
+            map: map
+        });
+
+        var marker2 = new google.maps.Marker({
+            position: staplescenter,
+            map: map
+        });
+    }
+</script>
+<script async defer
+        src=
+                "https://maps.googleapis.com/maps/api/js?key=AIzaSyAPMRmSWocxoUMhNLKfpLAknYNk1j3H3q0&callback=initMap">
+</script>
+</body>
