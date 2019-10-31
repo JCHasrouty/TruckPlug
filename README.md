@@ -62,7 +62,7 @@ TruckPlug is an app made for foodies. This app aims to bring any and all food tr
 
 * [ReactJS](https://reactjs.org/)
 * [Node.js](https://nodejs.org/en/)
-* [MongoDB](https://www.mongodb.com/)
+* [PostgreSQL](https://www.postgresql.org/)
 * [Amazon Web Services](https://aws.amazon.com//)
 * [Docker](https://www.docker.com/)
 * [serverless](https://serverless.com/)
