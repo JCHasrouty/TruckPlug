@@ -7,7 +7,7 @@ function Header() {
   return (
     <header>
         <div className="logo">
-            <img src={require('/Users/jchasrouty/Documents/CSUN/COMP-490/TruckPlug/truck_plug/src/logo/TruckPlug_Logo.png')}/>
+            <img src={require('./TruckPlug_Logo.png')}/>
         </div>
 
         <nav>
