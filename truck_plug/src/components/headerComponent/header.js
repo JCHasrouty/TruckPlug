@@ -8,7 +8,6 @@ function Header() {
     <header>
         <div className="logo">
             <img height="80px" width="80px" src={require('./TruckPlug_Logo.png')}/>
-            <a href="/"></a>
         </div>
 
         <nav>
