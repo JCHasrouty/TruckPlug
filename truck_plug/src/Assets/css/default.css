@@ -35,23 +35,29 @@ header .logo{
     left:15px;
     -webkit-transform:translateY(-50%);
     -moz-transform:translateY(-50%);
-    transform:translateY(-50%)}
-    header nav,header nav ul,header nav ul li{
-        margin:0;
-        padding:0;}
-        header nav{
-            position:absolute;
-            top:50%;
-            right:15px;
-            -webkit-transform:translateY(-50%);
-            -moz-transform:translateY(-50%);
-            transform:translateY(-50%)}
-            header ul li{
-                list-style-type:none;
-                display:inline-block}
-                header ul li.last{margin:0}
-                header ul li a{font-size:19px;
-                    line-height:normal;
-                    text-decoration:none;
-                    color:#fff;
-                    margin-right:50px}
+    transform:translateY(-50%)
+}
+header nav,header nav ul,header nav ul li{
+    margin:0;
+    padding:0;
+}
+header nav{
+    position:absolute;
+    top:50%;
+    right:15px;
+    -webkit-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    transform:translateY(-50%)
+}
+header ul li{
+    list-style-type:none;
+    display:inline-block
+}
+header ul li.last{margin:0}
+header ul li a{
+    font-size:19px;
+    line-height:normal;
+    text-decoration:none;
+    color:#fff;
+    margin-right:50px
+}
