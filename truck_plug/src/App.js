@@ -13,7 +13,8 @@ import mapPage from './components/pages/mapPage';
 import aboutPage from './components/pages/aboutPage';
 import contactPage from './components/pages/contactPage';
 // includes
-import './Assets/css/default.min.css';
+//import './Assets/css/default.min.css';
+import './Assets/css/default.css';
 
 
 function App() {
