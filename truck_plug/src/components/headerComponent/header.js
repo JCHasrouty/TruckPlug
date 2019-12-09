@@ -1,13 +1,17 @@
 import React from 'react';
 import{
-    Link
+    Link,
 } from 'react-router-dom';
+import Logo from "../../logo/TruckPlug_Logo.png";
+
 
 function Header() {
   return (
     <header>
         <div className="logo">
-            <img height="80px" width="80px" src={require('./TruckPlug_Logo.png')}/>
+            <a href="/">
+            <img height="80px" width="80px" src={Logo}/>
+            </a>
         </div>
 
         <nav>

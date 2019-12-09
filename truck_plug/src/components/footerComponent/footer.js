@@ -1,11 +1,17 @@
 import React from 'react';
 
-function Footer() {
+function FooterPage() {
   return (
     <footer>
-      Footer
+      <div class="row">
+        <div class="column">
+          <div class="footer-column">
+            TruckPlug © 2019
+          </div>
+        </div>
+      </div>
     </footer>
   );
 }
-
-export default Footer;
+export default FooterPage;
+//export default Footer;

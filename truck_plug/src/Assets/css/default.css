@@ -1,5 +1,18 @@
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: local('Montserrat'), url(../../fonts/Montserrat-Regular.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: local('Montserrat'), url(../../fonts/Montserrat-Medium.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: local('FiraSans'), url(../../fonts/Montserrat-Bold.otf) format('truetype');
+}
+  
 body{
-    font-family:'Open Sans',sans-serif;
+    /* font-family:'Open Sans',sans-serif; */
     font-size:18px;color:#010000;
     font-weight:400;
     font-style:normal
@@ -18,8 +31,66 @@ a:hover{
     transition:.4s ease-in-out;
     text-decoration:none
 }
+/* .container-fluid{
+    display: flex;
+    flex-direction: column;
+    line-height:24px;
+    padding: 50px;
+    font-family: Montserrat-Regular;
+} */
+
 .container-fluid{
-    line-height:24px
+    margin: 15px;
+    font-family: Montserrat-Regular;
+}
+
+.row{
+    /* margin: 50px; */
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.map-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 700px;
+}
+
+.column{
+    margin: 20px;
+    line-height: 80px;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.column-map{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+}
+
+.footer-column{
+    width:100%;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.container-fluid h1 {
+    line-height: 55px;
+    font-family: Montserrat-Bold;
+    text-transform: uppercase;
+}
+.container-fluid h2{
+    line-height: 55px;
+    font-size: 24px;
 }
 header{
     position:relative;
@@ -27,7 +98,8 @@ header{
     width:100%;
     background:#010000;
     color:#fff;
-    height:90px
+    height:90px;
+    font-family: Montserrat-Medium;
 }
 header .logo{
     position:absolute;
@@ -60,4 +132,82 @@ header ul li a{
     text-decoration:none;
     color:#fff;
     margin-right:50px
+}
+.plug-button{
+    font-family: Montserrat-Bold;
+}
+
+/* Code for About Me Page */
+.about-column-one{
+    text-align: center;
+}
+.about-column-two{
+    text-align: center;
+}
+.about-column-three{
+    text-align: center;
+}
+.about-column-four{
+    text-align: center;
+}
+
+/* Code for Contact Page */
+.contact-title{
+    margin-top: 100px;
+    font-family: Montserrat-Regular;
+    color: #000000;
+    text-transform: uppercase;
+    transition: all 4s ease-in-out;
+    line-height: 24px;
+}
+
+.contact-title h1{
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    text-anchor: middle;
+}
+
+.contact-title h2{
+    font-size: 20px;
+    text-align: center;
+    line-height: 10px;
+}
+
+form{
+    font-family: Montserrat-Regular;
+    width: 50%;
+    margin: auto;
+    transition: all 4s ease-in-out;
+}
+
+.form-control{
+
+    width: 600px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    color: #333333;
+    font-size: 18px;
+    margin: 0 auto 16px;
+}
+
+input{
+    height: 45px;
+}
+
+form .submit{
+    background: firebrick;
+    border-color: transparent;
+    color: white;
+    font-size: 20px;
+    height: 50px;
+    margin-top: 20px;
+
+}
+
+form .submit:hover{
+    background-color: maroon;
+    cursor: pointer;
 }

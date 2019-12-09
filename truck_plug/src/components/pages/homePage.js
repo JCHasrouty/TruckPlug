@@ -1,14 +1,52 @@
 import React from 'react';
+import FoodImage from "../../images/food_truck_food.jpg";
+import Button from 'react-bootstrap/Button';
 
 function Homepage() {
   return (
     <div className="container-fluid">
-        <h1>
-            Home Page Content
+      <div class="row">
+        <div class="column">
+          <div class="column-one">
+            <h1> 
+              Hungry Angry? <br/>
+              Don't Know What to Eat? <br/>
+              Let The Truck Plug Help You Out! <br/>  
+            </h1>
+            <h2>
+              Navigate to our Maps page and start your food truck adventure today!
+            </h2>
+            <div className ="plug-button">
+            <Button href="/mapPage" variant="danger" size="lg">
+              PLUG
+            </Button>
+        </div>
+          </div>
+        </div>
+        <div class="column">
+          <div class="column-two">
+          <img src={FoodImage} align="right" width="600" height="400"></img>
+          </div>
+        </div>
+      </div>
+      { /* Add another row here for footer */ }
+        {/* <h1>
+          <img src={FoodImage} align="right" width="600" height="400"></img>
+            Hungry? Angry? <br/>
+            Don't Know What to Eat? <br/>
+            Let The Truck Plug Help You Out! <br/>
         </h1>
+        <h2>
+        Navigate to our Maps page and start your food truck adventure today!
+        </h2>
         <p>
-        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-        </p>
+        Navigate to our Maps page and start your food truck adventure today!
+        </p> */}
+        {/* <div className ="plug-button">
+            <Button href="/mapPage" variant="danger" size="lg">
+              PLUG
+            </Button>
+        </div> */}
     </div>
   );
 }

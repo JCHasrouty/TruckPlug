@@ -1,52 +1,129 @@
-import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
-import React, { Component} from 'react';
-import ReactDOM from 'react-dom';
-import { isAbsolute } from 'path';
+import React, { Component } from 'react';
+import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
 
 const mapStyles = {
-  width: '60%',
-  height: '87%',
-}
+    width: '100%',
+    height: '700px'
+};
 
+let geocoder;
 
-export class MapContainer extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      stores: [{lat: 47.49855629475769, lng: -122.14184416996333},
-              {latitude: 47.359423, longitude: -122.021071},
-              {latitude: 47.2052192687988, longitude: -121.988426208496},
-              {latitude: 47.6307081, longitude: -122.1434325},
-              {latitude: 47.3084488, longitude: -122.2140121},
-              {latitude: 47.5524695, longitude: -122.0425407}]
+class MapContainer extends Component {
+    constructor (props) {
+        super(props);
+        this.onMarkerClick = this.onMarkerClick.bind(this);
+        this.displayMarkers = this.displayMarkers.bind(this);
+        this.state = {
+            lat: 34.052235,
+            lng: -118.243683,
+            showingInfoWindow: false,
+            activeMarker: {},
+            selectedPlace: {},
+            places: []
+        }
     }
-  }
 
-  displayMarkers = () => {
-    return this.state.stores.map((store, index) => {
-      return <Marker key={index} id={index} position={{
-       lat: store.latitude,
-       lng: store.longitude
-     }}
-     onClick={() => console.log("You clicked me!")} />
-    })
-  }
+    componentDidMount () {
+        this.plotPoints();
+    }
 
-  render() {
-    return (
-        <Map
-          google={this.props.google}
-          zoom={8}
-          style={mapStyles}
-          initialCenter={{ lat: 47.444, lng: -122.176}}
-        >
-          {this.displayMarkers()}
-        </Map>
-    );
-  }
+    plotPoints () {
+        let places = [];
+        let locationData = [];
+
+        //Fetch address from database...runs from address file in server folder
+        fetch('/api/address')
+            .then(res => res.json())
+            .then(res => {
+                let addressList = res.map(r => r.address);
+                for (let i = 0; i < addressList.length; i++) {
+                    locationData.push(this.findLatLang(addressList[i], geocoder))
+                }
+                //Extracts geocodes from a promise stores it into array
+                Promise.all(locationData)//Do fetch within Promise combine getPoints
+                    .then((returnVals) =>{
+                        returnVals.forEach((latLng) => {
+                            let place = {
+                                latitude: latLng[0],
+                                longitude: latLng[1]
+                            };
+                            places.push(place);
+                        });
+                        //places now populated
+                        this.setState(() => {
+                            return {
+                                places: places
+                            }
+                        });
+
+                    });
+            });
+    }
+
+    findLatLang(address, geocoder) {
+        console.log(address);
+        return new Promise(function(resolve, reject) {
+            geocoder.geocode({
+                'address': address
+            }, function(results, status) {
+                if (status === 'OK') {
+                    console.log(results);
+                    resolve([results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
+                } else {
+                    reject(new Error('Couldnt\'t find the location ' + address));
+                }
+            })
+        })
+    }
+
+    displayMarkers (stores) {
+        return stores.map((place, index) => {
+            return <Marker key={index} id={index} position={{
+                lat: place.latitude,
+                lng: place.longitude
+            }}
+                           onClick={() => console.log("You clicked me!")} />
+        })
+    }
+
+    onMarkerClick (props, marker, e) {
+        this.setState({
+            selectedPlace: props,
+            activeMarker: marker,
+            showingInfoWindow: true
+        });
+    };
+
+    render() {
+
+        geocoder = new this.props.google.maps.Geocoder();
+        return (
+                <div className="map-row">
+                    <div className="column-map">
+                        <Map
+                            google={this.props.google}
+                            zoom={8}
+                            style={mapStyles}
+                            initialCenter={{
+                                lat: this.state.lat,
+                                lng: this.state.lng
+                            }}
+                        >
+                            {this.displayMarkers(this.state.places)}
+                            <InfoWindow
+                                marker={this.state.activeMarker}
+                                visible={this.state.showingInfoWindow}
+                            >
+                                <div>Your Location Here!</div>
+                            </InfoWindow>
+                        </Map>
+                    </div>
+            </div>
+        );
+    }
 }
 
 export default GoogleApiWrapper({
-  apiKey: ''
-})(MapContainer)
+    // insert API key here
+    apiKey: ''
+})(MapContainer);
