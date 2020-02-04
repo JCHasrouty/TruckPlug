@@ -4,12 +4,10 @@ The aim of this project is to bridge the gap between foodies and food trucks. Th
 ## Demo Screenshots 
 
 ### Home Page
-![Image of Home Page]
-(https://github.com/JCHasrouty/TruckPlug/blob/master/images/TruckPlug_Home_Page.png)
+![Image of Home Page](https://github.com/JCHasrouty/TruckPlug/blob/master/images/TruckPlug_Home_Page.png)
 
 ### Map Page
-![Image of Map Page]
-(https://github.com/JCHasrouty/TruckPlug/blob/master/images/TruckPlug_Map_Page.png)
+![Image of Map Page](https://github.com/JCHasrouty/TruckPlug/blob/master/images/TruckPlug_Map_Page.png)
 
 ## Features
 
