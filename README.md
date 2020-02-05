@@ -14,8 +14,17 @@ The aim of this project is to bridge the gap between foodies and food trucks. Th
 ### Currently Implemented
 
 ### Planned
+- [ ] Automatic input to database via scraping or other method
+- [ ] Search bar (WIP)
+- [ ] Filter system
+- [ ] Display food truck characteristics (time, location, reviews, etc.)
+- [ ] Connect to Yelp API to display reviews
+- [ ] Sign-In/Profile system
+- [ ] Event page to showcase meet-ups/truck gatherings
+- [ ] Tinder-like feature (randomizing wheel to suggest foods)
 
 ### Contributors
+
 * Chun-Yen Wang (Vincent)
 * Gustavo Chavez
 * Jean Claude Hasrouty
