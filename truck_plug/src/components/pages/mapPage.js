@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
+import { tsMethodSignature } from '@babel/types';
 
 const mapStyles = {
-    width: '100%',
-    height: '700px'
+    width: '75%',
+    height: '825px'
 };
 
 let geocoder;
@@ -16,7 +17,7 @@ class MapContainer extends Component {
         this.state = {
             lat: 34.052235,
             lng: -118.243683,
-            showingInfoWindow: false,
+            showingInfoWindow: true,
             activeMarker: {},
             selectedPlace: {},
             places: []
@@ -94,6 +95,15 @@ class MapContainer extends Component {
         });
     };
 
+    onClose = props => {
+        if(this.state.showingInfoWindow){
+            this.setState({
+                showingInfoWindow:false,
+                activeMarker: null
+        });
+        }
+    };
+
     render() {
 
         geocoder = new this.props.google.maps.Geocoder();
@@ -102,19 +112,30 @@ class MapContainer extends Component {
                     <div className="column-map">
                         <Map
                             google={this.props.google}
-                            zoom={8}
+                            zoom={10}
                             style={mapStyles}
+                            centerAroundCurrentLocation={{
+                                lat: this.state.lat,
+                                lng: this.state.lng}}
                             initialCenter={{
                                 lat: this.state.lat,
                                 lng: this.state.lng
                             }}
                         >
+                            {/* {this.displayMarkers(this.state.stores)} */}
                             {this.displayMarkers(this.state.places)}
+                            <Marker
+                                onClick={this.onMarkerClick}
+                                name={'Tacos El Comelon' }
+                                location={'901 S Hill St, Los Angeles, CA 90015'}
+                            />
                             <InfoWindow
                                 marker={this.state.activeMarker}
                                 visible={this.state.showingInfoWindow}
+                                onClose={this.onClose}
                             >
-                                <div>Your Location Here!</div>
+                                <div><h4>{this.state.selectedPlace.name}</h4>
+                                <b2>{this.state.selectedPlace.location}</b2></div>
                             </InfoWindow>
                         </Map>
                     </div>
@@ -125,5 +146,5 @@ class MapContainer extends Component {
 
 export default GoogleApiWrapper({
     // insert API key here
-    apiKey: 'AIzaSyAPMRmSWocxoUMhNLKfpLAknYNk1j3H3q0'
+    apiKey: ''
 })(MapContainer);

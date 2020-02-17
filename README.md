@@ -23,7 +23,7 @@ The aim of this project is to bridge the gap between foodies and food trucks. Th
 - [ ] Event page to showcase meet-ups/truck gatherings
 - [ ] Tinder-like feature (randomizing wheel to suggest foods)
 
-### Contributors
+## Contributors
 
 * Chun-Yen Wang (Vincent)
 * Gustavo Chavez

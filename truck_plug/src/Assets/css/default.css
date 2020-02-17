@@ -10,7 +10,11 @@
     font-family: 'Montserrat-Bold';
     src: local('FiraSans'), url(../../fonts/Montserrat-Bold.otf) format('truetype');
 }
-  
+
+* {
+    margin: 0;
+    padding: 0;
+}
 body{
     /* font-family:'Open Sans',sans-serif; */
     font-size:18px;color:#010000;
@@ -92,7 +96,7 @@ a:hover{
     line-height: 55px;
     font-size: 24px;
 }
-header{
+/* header{
     position:relative;
     display:block;
     width:100%;
@@ -100,8 +104,56 @@ header{
     color:#fff;
     height:90px;
     font-family: Montserrat-Medium;
+} */
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 5%;
+    background-color: #000000;
+    height: 90px;
+    font-size: larger;
+    font-family: Montserrat-Medium;
 }
+
 header .logo{
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 15px;
+}
+
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+    color: #ff0044;
+}
+
+.nav_links li a:hover {
+    color: #fff;
+}   
+
+
+footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 30px 5%;
+    color: white;
+    background-color: #000000;
+    height: 90px;
+    font-size: larger;
+    font-family: Montserrat-Medium;
+}
+
+/* header .logo{
     position:absolute;
     top:50%;
     left:15px;
@@ -132,12 +184,15 @@ header ul li a{
     text-decoration:none;
     color:#fff;
     margin-right:50px
-}
+} */
 .plug-button{
     font-family: Montserrat-Bold;
 }
 
-/* Code for About Me Page */
+/************************** 
+    Code for About Me Page 
+***************************/
+
 .about-column-one{
     text-align: center;
 }
@@ -151,7 +206,10 @@ header ul li a{
     text-align: center;
 }
 
-/* Code for Contact Page */
+/************************** 
+    Code for Contact Page 
+***************************/
+
 .contact-title{
     margin-top: 100px;
     font-family: Montserrat-Regular;
@@ -210,4 +268,10 @@ form .submit{
 form .submit:hover{
     background-color: maroon;
     cursor: pointer;
+}
+
+@media(max-width: 800px){
+    .container-fluid{
+        flex-direction: column;
+    }
 }

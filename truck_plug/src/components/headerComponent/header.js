@@ -3,6 +3,7 @@ import{
     Link,
 } from 'react-router-dom';
 import Logo from "../../logo/TruckPlug_Logo.png";
+//import { MDBCol, MDCFormInline, MDBBtn} from "mdbreact";
 
 
 function Header() {
@@ -10,12 +11,12 @@ function Header() {
     <header>
         <div className="logo">
             <a href="/">
-            <img height="80px" width="80px" src={Logo}/>
+            <img height="80px" width="80px" src={Logo} alt="TruckPlug Logo"/>
             </a>
         </div>
 
         <nav>
-            <ul>
+            <ul class="nav_links">
                 <li className="first">
                     <Link to="/">Home</Link>
                 </li>
@@ -30,6 +31,10 @@ function Header() {
                 </li>
             </ul>
         </nav>
+        {/* <Form inline>
+            <FormControl type="text" placeholder="Search" classname="mr-sm-2" />
+            <Button variant="outline-success">Search</Button>
+        </Form> */}
     </header>
   );
 }
