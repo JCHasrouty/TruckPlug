@@ -14,6 +14,8 @@ app.use(bodyParser.json());
 
 
 app.use('/api/address', require('./api/address'));
+app.use('/api/truck_name', require('./api/truck_name'));
+app.use('/api/url', require('./api/url'));
 // app.use('/api/weather', require('./api/weather'));
 
 // if (ENV === 'production') {

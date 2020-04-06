@@ -3,6 +3,7 @@ import{
     Link,
 } from 'react-router-dom';
 import Logo from "../../logo/TruckPlug_Logo.png";
+import LoginIcon from "../../images/login_photo.png";
 //import { MDBCol, MDCFormInline, MDBBtn} from "mdbreact";
 
 
@@ -24,10 +25,16 @@ function Header() {
                     <Link to="/mapPage">Map</Link>
                 </li>
                 <li>
+                    <Link to="/eventPage">Upcoming Events</Link>
+                </li>
+                <li>
                     <Link to="/aboutPage">About Us</Link>
                 </li>
                 <li className="last">
                     <Link to="/contactPage">Contact</Link>
+                </li>
+                <li>
+                    <Link to="/loginPage"><img height="60px" width="60px" src={LoginIcon} alt="Login"/></Link>
                 </li>
             </ul>
         </nav>

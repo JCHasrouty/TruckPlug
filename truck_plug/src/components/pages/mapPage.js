@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import { tsMethodSignature } from '@babel/types';
+//import axios from 'axios';
 
 const mapStyles = {
-    width: '75%',
+    width: '100%',
     height: '825px'
 };
 
@@ -17,16 +17,39 @@ class MapContainer extends Component {
         this.state = {
             lat: 34.052235,
             lng: -118.243683,
-            showingInfoWindow: true,
+            showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            places: []
+            places: [],
+            addressList: [],
+            truck_name: [],
+            url: []
         }
     }
 
     componentDidMount () {
         this.plotPoints();
+		this.getTruckName();
+		this.getURL();
     }
+
+	getTruckName = () => {
+        fetch('/api/truck_name')
+            .then(res => res.json())
+            .then(res => {
+                var truck_name = res.map(r => r.truck_name);
+                this.setState({truck_name});
+            });
+    };
+
+    getURL = () => {
+        fetch('/api/url')
+            .then(res => res.json())
+            .then(res => {
+                var url = res.map(r => r.url);
+                this.setState({url});
+            });
+    };
 
     plotPoints () {
         let places = [];
@@ -37,6 +60,7 @@ class MapContainer extends Component {
             .then(res => res.json())
             .then(res => {
                 let addressList = res.map(r => r.address);
+                this.setState({addressList});
                 for (let i = 0; i < addressList.length; i++) {
                     locationData.push(this.findLatLang(addressList[i], geocoder))
                 }
@@ -83,7 +107,11 @@ class MapContainer extends Component {
                 lat: place.latitude,
                 lng: place.longitude
             }}
-                           onClick={() => console.log("You clicked me!")} />
+                           onClick={this.onMarkerClick}
+                            name={this.state.truck_name[index]}
+							name1={this.state.addressList[index]}
+                            name3={<a href={this.state.url[index]} target="_blank">Yelp</a>}
+             />
         })
     }
 
@@ -98,53 +126,88 @@ class MapContainer extends Component {
     onClose = props => {
         if(this.state.showingInfoWindow){
             this.setState({
-                showingInfoWindow:false,
+                showingInfoWindow: false,
                 activeMarker: null
-        });
+            });
         }
     };
 
     render() {
 
         geocoder = new this.props.google.maps.Geocoder();
+
         return (
-                <div className="map-row">
-                    <div className="column-map">
+            <div id="parent">
+
+            <div class="sidenav">
+            <b2>1) Hawaiian Hot Chicken</b2>
+            <p><small>Hawaiian</small></p>
+
+            <b2>2) 405 Teppanyaki</b2>
+            <p><small>Japanese</small></p>
+
+            <b2>3) Birrieria San Marcos</b2>
+            <p><small>Mexican</small></p>
+
+            <b2>4) Keep On Grubbin'</b2>
+            <p><small>Burgers</small></p>
+
+            <b2>5) Chick Stop</b2>
+            <p><small>American</small></p>
+
+            <b2>6) Godfather Truck</b2>
+            <p><small>American</small></p>
+
+            <b2>7) Leos Taco Truck</b2>
+            <p><small>Mexican</small></p>
+
+            <b2>8) Paratta</b2>
+            <p><small>Middle Eastern</small></p>
+
+            <b2>9) Keep On Grubbin</b2>
+            <p><small>American</small></p>
+
+            <b2>10) Fettes Schwein</b2>
+            <p><small>American</small></p>
+
+            <b2>11) Daniels Food Truck</b2>
+            <p><small>Mexican</small></p>
+
+            <b2>12) Mariscos El Sabroso</b2>
+            <p><small>Mexican</small></p>
+
+            </div>
+            <div class="main">
+            </div>
+
+            <div className="map-row">
+                <div className="column-map">
                         <Map
                             google={this.props.google}
                             zoom={10}
                             style={mapStyles}
-                            centerAroundCurrentLocation={{
-                                lat: this.state.lat,
-                                lng: this.state.lng}}
                             initialCenter={{
                                 lat: this.state.lat,
                                 lng: this.state.lng
                             }}
                         >
-                            {/* {this.displayMarkers(this.state.stores)} */}
                             {this.displayMarkers(this.state.places)}
-                            <Marker
-                                onClick={this.onMarkerClick}
-                                name={'Tacos El Comelon' }
-                                location={'901 S Hill St, Los Angeles, CA 90015'}
-                            />
                             <InfoWindow
                                 marker={this.state.activeMarker}
                                 visible={this.state.showingInfoWindow}
                                 onClose={this.onClose}
                             >
-                                <div><h4>{this.state.selectedPlace.name}</h4>
-                                <b2>{this.state.selectedPlace.location}</b2></div>
+                                <div>{this.state.selectedPlace.name} <br /> {this.state.selectedPlace.name1}
+                                	<br /> {this.state.selectedPlace.name3} </div>
                             </InfoWindow>
                         </Map>
-                    </div>
+                </div>
+            </div>
             </div>
         );
     }
 }
 
 export default GoogleApiWrapper({
-    // insert API key here
     apiKey: ''
 })(MapContainer);

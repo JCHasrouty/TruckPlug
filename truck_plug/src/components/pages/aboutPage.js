@@ -42,6 +42,19 @@ function Aboutpage() {
           We started this company with one thought in mind... food. You thought we were going to say you huh? Well you're wrong. Food is love, food is life. 
         </div>
       </div>
+      <br /> 
+    <br /> 
+    <br /> 
+    <br /> 
+    <br />
+    <br /> 
+    <br /> 
+    <br /> 
+    <br /> 
+    <br />
+    <br /> 
+    <br /> 
+    <br /> 
     </div>
   );
 }

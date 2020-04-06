@@ -1,0 +1,337 @@
+@font-face {
+    font-family: 'Montserrat-Regular';
+    src: local('Montserrat'), url(../../fonts/Montserrat-Regular.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Medium';
+    src: local('Montserrat'), url(../../fonts/Montserrat-Medium.otf) format('truetype');
+}
+@font-face {
+    font-family: 'Montserrat-Bold';
+    src: local('FiraSans'), url(../../fonts/Montserrat-Bold.otf) format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    /* font-family:'Open Sans',sans-serif; */
+    font-size:18px;
+    color:#010000;
+    font-weight:400;
+    font-style:normal
+}
+a{
+    text-decoration:none;
+    -webkit-transition:.4s ease-in-out;
+    -moz-transition:.4s ease-in-out;
+    transition:.4s ease-in-out;
+    cursor:pointer
+}
+a:hover{
+    color:#ff1755;
+    -webkit-transition:.4s ease-in-out;
+    -moz-transition:.4s ease-in-out;
+    transition:.4s ease-in-out;
+    text-decoration:none
+}
+/* .container-fluid{
+    display: flex;
+    flex-direction: column;
+    line-height:24px;
+    padding: 50px;
+    font-family: Montserrat-Regular;
+} */
+
+.container-fluid{
+    margin: 15px;
+    font-family: Montserrat-Regular;
+}
+
+.row{
+    /* margin: 50px; */
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.map-row{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    height: 700px;
+}
+
+.column{
+    margin: 20px;
+    line-height: 80px;
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+}
+
+.column-map{
+    display: flex;
+    flex-direction: column;
+    flex:1;
+}
+
+.footer-column{
+    width:100%;
+    background-color: black;
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+}
+
+.container-fluid h1 {
+    line-height: 55px;
+    font-family: Montserrat-Bold;
+    text-transform: uppercase;
+}
+.container-fluid h2{
+    line-height: 55px;
+    font-size: 24px;
+}
+
+.home-page-info {
+    line-height: 3em;
+}
+/* header{
+    position:relative;
+    display:block;
+    width:100%;
+    background:#010000;
+    color:#fff;
+    height:90px;
+    font-family: Montserrat-Medium;
+} */
+
+header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 30px 5%;
+    background-color: #000000;
+    height: 90px;
+    font-size: larger;
+    font-family: Montserrat-Medium;
+}
+
+header .logo{
+    cursor: pointer;
+    margin-right: auto;
+}
+
+.nav_links {
+    list-style: none;
+}
+
+.nav_links li {
+    display: inline-block;
+    padding: 0px 15px;
+}
+
+.nav_links li a {
+    transition: all 0.3s ease 0s;
+    color: #ff0044;
+}
+
+.nav_links li a:hover {
+    color: #fff;
+}   
+
+
+footer {
+    display: page;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding: 30px 5%;
+    color: white;
+    background-color: #000000;
+    height: 90px;
+    font-size: larger;
+    font-family: Montserrat-Medium;
+}
+
+/* header .logo{
+    position:absolute;
+    top:50%;
+    left:15px;
+    -webkit-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    transform:translateY(-50%)
+}
+header nav,header nav ul,header nav ul li{
+    margin:0;
+    padding:0;
+}
+header nav{
+    position:absolute;
+    top:50%;
+    right:15px;
+    -webkit-transform:translateY(-50%);
+    -moz-transform:translateY(-50%);
+    transform:translateY(-50%)
+}
+header ul li{
+    list-style-type:none;
+    display:inline-block
+}
+header ul li.last{margin:0}
+header ul li a{
+    font-size:19px;
+    line-height:normal;
+    text-decoration:none;
+    color:#fff;
+    margin-right:50px
+} */
+.plug-button{
+    font-family: Montserrat-Bold;
+}
+
+/************************** 
+    Code for About Me Page 
+***************************/
+
+.about-column-one{
+    text-align: center;
+}
+.about-column-two{
+    text-align: center;
+}
+.about-column-three{
+    text-align: center;
+}
+.about-column-four{
+    text-align: center;
+}
+
+/************************** 
+    Code for Contact Page 
+***************************/
+
+.contact-title{
+    margin-top: 100px;
+    font-family: Montserrat-Regular;
+    color: #000000;
+    text-transform: uppercase;
+    transition: all 4s ease-in-out;
+    line-height: 24px;
+}
+
+.contact-title h1{
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    text-anchor: middle;
+}
+
+.contact-title h2{
+    font-size: 20px;
+    text-align: center;
+    line-height: 10px;
+}
+
+form{
+    font-family: Montserrat-Regular;
+    width: 50%;
+    margin: auto;
+    transition: all 4s ease-in-out;
+}
+
+.form-control{
+
+    width: 600px;
+    background: transparent;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid gray;
+    color: #333333;
+    font-size: 18px;
+    margin: 0 auto 16px;
+}
+
+input{
+    height: 45px;
+}
+
+form .submit{
+    background: firebrick;
+    border-color: transparent;
+    color: white;
+    font-size: 20px;
+    height: 50px;
+    margin-top: 20px;
+
+}
+
+form .submit:hover{
+    background-color: maroon;
+    cursor: pointer;
+}
+
+@media(max-width: 800px){
+    .container-fluid{
+        flex-direction: column;
+    }
+}
+
+/* Sidbar Styling */
+.sidenav {
+    height: 100%; /* Full-height: remove this if you want "auto" height */
+    width: 20%; /* Set the width of the sidebar */
+    position: fixed; /* Fixed Sidebar (stay in place on scroll) */
+    z-index: 1; /* Stay on top */
+    top: 2; /* Stay at the top */
+    right: 0;
+    background-color: #ffffff; /* Black */
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 20px;
+    font-family: Montserrat-Medium;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    padding: 6px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    font-family: Montserrat-Medium;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Style page content */
+.main {
+    margin-left: 160px; /* Same as the width of the sidebar */
+    padding: 0px 10px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidebar (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+}
+
+/* Login Page Styling */
+@media all and (min-width: 100px) {
+    .Login {
+        padding: 100px 0;
+    }
+
+    .Login form {
+        margin: 0 auto;
+        max-width: 450px;
+    }
+}
