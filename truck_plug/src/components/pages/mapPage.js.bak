@@ -1,94 +1,106 @@
-ximport React, { Component } from 'react';
+import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-import CurrentLocation from './Map';
+//import axios from 'axios';
 
 const mapStyles = {
     width: '100%',
-    height: '100vh'
+    height: '825px'
 };
 
 let geocoder;
-let addressData = [{location: "Hawaiian Hot Chicken"}, {location: "405 Teppanyaki"}];
 
-export class MapContainer extends Component {
+class MapContainer extends Component {
     constructor (props) {
         super(props);
         this.onMarkerClick = this.onMarkerClick.bind(this);
         this.displayMarkers = this.displayMarkers.bind(this);
         this.state = {
-            lat: 34.2381,
-            lng: -118.5301,
-            showingInfoWindow: true,
+            lat: 34.052235,
+            lng: -118.243683,
+            showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            places: [],
-            stores: [{latitude: 47.49855629475769, longitude: -122.14184416996333},
-                {latitude: 47.359423, longitude: -122.021071},
-                {latitude: 47.2052192687988, longitude: -121.988426208496},
-                {latitude: 47.6307081, longitude: -122.1434325},
-                {latitude: 47.3084488, longitude: -122.2140121},
-                {latitude: 47.5524695, longitude: -122.0425407}]
+            addressList: [],
+            truck_name: [],
+            url: [],
+            //add by joey
+            coordinates: [],
+            food_type: [],
+            rating: [],
+            price_range: []
         }
     }
 
     componentDidMount () {
-        this.plotPoints()
+		this.getTruckName();
+		this.getURL();
+		this.getAddress();
+        this.getCoordinates();
+        this.getTruckDetails();
     }
 
-    plotPoints () {
-        let locations = this.getPoints(geocoder)
-        let places = new Array()
-
-        Promise.all(locations)
-            .then((returnVals) =>{
-                returnVals.forEach((latLng) => {
-                    let place = {
-                        latitude: latLng[0],
-                        longitude: latLng[1]
-                    }
-                    places.push(place)
-                })
-
-                // places now populated
-                this.setState(() => {
-                    return {
-                        places: places
-                    }
-                });
-
+    getTruckDetails = () => {
+        fetch('/api/truck_details')
+            .then(res => res.json())
+            .then(res => {
+                var food_type = res.map(r => r.food_type);
+                var rating = res.map(r => r.rating);
+                var price_range = res.map(r => r.price_range);
+                this.setState({food_type});
+                this.setState({rating});
+                this.setState({price_range});
             });
-    }
+    };
 
-    getPoints(geocoder) {
-        let locationData = [];
-        for (let i = 0; i < addressData.length; i++) {
-            locationData.push(this.findLatLang(addressData[i].location, geocoder))
-        }
-        return locationData // array of promises
-    }
+	getTruckName = () => {
+        fetch('/api/truck_name')
+            .then(res => res.json())
+            .then(res => {
+                var truck_name = res.map(r => r.truck_name);
+                this.setState({truck_name});
+            });
+    };
 
-    findLatLang(address, geocoder) {
-        return new Promise(function(resolve, reject) {
-            geocoder.geocode({
-                'address': address
-            }, function(results, status) {
-                if (status === 'OK') {
-                    console.log(results);
-                    resolve([results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
-                } else {
-                    reject(new Error('Couldnt\'t find the location ' + address));
-                }
-            })
-        })
-    }
+    getURL = () => {
+        fetch('/api/url')
+            .then(res => res.json())
+            .then(res => {
+                var url = res.map(r => r.url);
+                this.setState({url});
+            });
+    };
 
-    displayMarkers (stores) {
-        return stores.map((place, index) => {
+    //added by joey
+    getCoordinates = () => {
+        fetch('/api/coordinates')
+            .then(res => res.json())
+            .then(res => {
+                var coordinates = res.map(r => r.coordinates);
+                this.setState({coordinates});
+            });
+    };
+
+    //added by joey
+    getAddress = () => {
+        fetch('/api/address')
+            .then(res => res.json())
+            .then(res => {
+                var addressList = res.map(r => r.address);
+                this.setState({addressList});
+            });
+    };
+
+    displayMarkers () {
+        return this.state.coordinates.map((coordinates, index) => {
             return <Marker key={index} id={index} position={{
-                lat: place.latitude,
-                lng: place.longitude
+                lat: coordinates.x,
+                lng: coordinates.y
             }}
-                           onClick={() => console.log("You clicked me!")} />
+                           onClick={this.onMarkerClick}
+                            name={this.state.truck_name[index]}
+                            name1={this.state.addressList[index]}
+                            name3={<a href={this.state.url[index]} target="_blank">Yelp</a>}
+             />
         })
     }
 
@@ -101,7 +113,7 @@ export class MapContainer extends Component {
     };
 
     onClose = props => {
-        if (this.state.showingInfoWindow) {
+        if(this.state.showingInfoWindow){
             this.setState({
                 showingInfoWindow: false,
                 activeMarker: null
@@ -109,49 +121,59 @@ export class MapContainer extends Component {
         }
     };
 
+    createSideNav = () => {
+        let side = [];
+        for(let i = 0; i < this.state.truck_name.length; i++){
+            let trucks = [];
+            trucks.push(<b2>{i + 1}) {this.state.truck_name[i]}</b2>);
+            trucks.push(<p><small>{this.state.food_type[i]} <br /> {this.state.rating[i]} {this.state.price_range[i]}</small></p>);
+            side.push(<b2>{trucks}</b2>);
+        }
+        return side;
+    };
+
     render() {
+
         geocoder = new this.props.google.maps.Geocoder();
+
         return (
-            <div className="container place-map">
-                <div className="row">
-                    <div className="col-md-12">
+            <div id="parent">
+
+            <div class="sidenav">
+                {this.createSideNav()}
+            </div>
+            <div class="main">
+            </div>
+
+            <div className="map-row">
+                <div className="column-map">
                         <Map
                             google={this.props.google}
-                            zoom={11}
+                            zoom={10}
                             style={mapStyles}
-
-                            centerAroundCurrentLocation={{lat: this.state.lat,
-                                lng: this.state.lng}}
                             initialCenter={{
                                 lat: this.state.lat,
                                 lng: this.state.lng
                             }}
-
-
                         >
-                            {this.displayMarkers(this.state.stores)}
-                            {this.displayMarkers(this.state.places)}
-                            <Marker
-                                onClick={this.onMarkerClick}
-                                name={'Hawaiian Hot Chicken'}
-                                location={'9160 Reseda Blvd, Northridge, CA 91324'}
-                            />
+                            {this.displayMarkers(this.state.coordinates)}
                             <InfoWindow
                                 marker={this.state.activeMarker}
                                 visible={this.state.showingInfoWindow}
                                 onClose={this.onClose}
                             >
-                                <div><h4>{this.state.selectedPlace.name}</h4>
-                                <b2>{this.state.selectedPlace.location}</b2></div>
+                                <div>{this.state.selectedPlace.name} <br /> {this.state.selectedPlace.name1}
+                                	<br /> {this.state.selectedPlace.name3} </div>
+
                             </InfoWindow>
                         </Map>
-                    </div>
                 </div>
+            </div>
             </div>
         );
     }
 }
 
 export default GoogleApiWrapper({
-    apiKey: 'AIzaSyAPMRmSWocxoUMhNLKfpLAknYNk1j3H3q0'
+    apiKey: 'AIzaSyBTyNrlporN5pCSZKan4GgSr61wEsEY1GQ'
 })(MapContainer);

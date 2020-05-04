@@ -1,13 +1,13 @@
 var express = require('express');
-var url = require('../models/url');
+var Coordinates = require('../models/coordinates');
 
 var router = express.Router();
 
 router.get('/', (req, res) => {
-    url.retrieveUrl(function (err, url) {
+    Coordinates.retrieveCoordinates(function (err, coordinates) {
         if(err)
             return res.json(err);
-        return res.json(url);
+        return res.json(coordinates);
     });
 });
 

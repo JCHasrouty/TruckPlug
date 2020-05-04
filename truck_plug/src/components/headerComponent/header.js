@@ -31,11 +31,11 @@ function Header() {
                     <Link to="/aboutPage">About Us</Link>
                 </li>
                 <li className="last">
-                    <Link to="/contactPage">Contact</Link>
+                    <Link to="/contactPage">Contact Us</Link>
                 </li>
-                <li>
+                {/* <li>
                     <Link to="/loginPage"><img height="60px" width="60px" src={LoginIcon} alt="Login"/></Link>
-                </li>
+                </li> */}
             </ul>
         </nav>
         {/* <Form inline>

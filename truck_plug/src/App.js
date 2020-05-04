@@ -14,6 +14,7 @@ import aboutPage from './components/pages/aboutPage';
 import contactPage from './components/pages/contactPage';
 import eventPage from './components/pages/eventPage';
 import loginPage from './components/pages/loginPage';
+import ownerPage from './components/pages/ownerPage';
 // includes
 //import './Assets/css/default.min.css';
 import './Assets/css/default.css';
@@ -30,6 +31,7 @@ function App() {
       <Route exact path='/contactPage' component={contactPage} />
       <Route exact path='/eventPage' component={eventPage} />
       <Route exact path='/loginPage' component={loginPage} />
+      <Route exact path='/ownerPage' component={ownerPage} />
 
       {/* <Footer /> */}
     </div>

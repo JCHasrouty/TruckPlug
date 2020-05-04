@@ -122,6 +122,22 @@ a:hover{
     width: 30vw;
 }
 
+.owner_sign_up{
+    order: 9;
+    padding: 5vh;
+    width: 35vw;
+}
+
+.food_truck_gathering{
+    order: 10;
+    padding: 5vh;
+    width: 35vw;
+}
+
+.food_truck_gathering img{
+    width: 35vw;
+}
+
 .map-row{
     display: flex;
     flex-direction: row;
@@ -313,7 +329,18 @@ input{
     line-height: 30px;
 }
 
-form{
+.contact-form{
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.contact-form * {
+    box-sizing: border-box;
+}
+
+/* form{
     font-family: Montserrat-Regular;
     width: 50vw;
     margin: auto;
@@ -350,7 +377,7 @@ form .submit{
 form .submit:hover{
     background-color: maroon;
     cursor: pointer;
-}
+} */
 
 @media(max-width: 800px){
     .container-fluid{
@@ -367,7 +394,8 @@ form .submit:hover{
     top: 2; /* Stay at the top */
     right: 0;
     padding-left: 30px;
-    background-color: #ffffff; /* Black */
+    background-color: white; /* Black */
+    color: black;
     overflow-x: hidden; /* Disable horizontal scroll */
     padding-top: 20px;
     font-family: Montserrat-Medium;
@@ -375,17 +403,17 @@ form .submit:hover{
 
 /* The navigation menu links */
 .sidenav a {
-    padding: 6px 8px 6px 16px;
+    /* padding: 6px 8px 6px 16px; */
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    font-size: 18px;
+    color: crimson;
     display: block;
     font-family: Montserrat-Medium;
 }
 
 /* When you mouse over the navigation links, change their color */
 .sidenav a:hover {
-    color: #f1f1f1;
+    color: gray;
 }
 
 /* Style page content */
@@ -413,5 +441,96 @@ form .submit:hover{
 }
 
 
+/************************** 
+    Owner Page Styling 
+***************************/
 
+.owner-title {
+    margin-top: 50px;
+    font-family: Montserrat-Regular;
+    color: #000000;
+    text-transform: uppercase;
+    /* transition: all 4s ease-in-out; */
+    line-height: 24px;
+}
+
+.owner-title h1{
+    font-size: 48px;
+    font-weight: bold;
+    text-align: center;
+    text-anchor: middle;
+}
+
+.owner-title h2{
+    font-size: 20px;
+    text-align: center;
+    line-height: 30px;
+}
+
+.owner-container{
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-top: 20px;
+}
+
+.owner-container * {
+    box-sizing: border-box;
+}
+
+.flex-outer {
+    list-style-type: none;
+    padding: 0;
+}
+
+.flex-outer {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.flex-outer li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    /* text-decoration: none */
+}
+
+.flex-outer > li > label, .flex-outer li p {
+    flex: 1 0 120px;
+    max-width: 220px;
+}
+
+.flex-outer > li > label + * {
+    flex: 1 0 220px;
+}
+
+.flex-outer li p {
+    margin: 0;
+}
+
+.flex-outer li input:not([type='checkbox']),
+.flex-outer li textarea {
+  padding: 15px;
+  /* border: none; */
+  border-style: 0.5px solid;
+  border-radius: 5px;
+}
+
+.flex-outer li button {
+    margin-top: 10px;
+    width: 200px;
+    margin-left: auto;
+    padding: 8px 16px;
+    border: none;
+    background: firebrick;
+    color: #f2f2f2;
+    text-transform: uppercase;
+    letter-spacing: .09em;
+    border-radius: 2px;
+}
+
+.required:after{
+    content: " * ";
+    color:red;
+}
 

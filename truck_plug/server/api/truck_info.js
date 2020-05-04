@@ -1,13 +1,13 @@
 var express = require('express');
-var url = require('../models/url');
+var TruckInfo = require('../models/truck_info');
 
 var router = express.Router();
 
 router.get('/', (req, res) => {
-    url.retrieveUrl(function (err, url) {
+    TruckInfo.retrieveTruckInfo(function (err, address) {
         if(err)
             return res.json(err);
-        return res.json(url);
+        return res.json(address);
     });
 });
 

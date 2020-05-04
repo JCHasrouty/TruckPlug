@@ -1,5 +1,6 @@
 import React from 'react';
 import FoodImage from "../../images/food_truck_food.jpg";
+import FoodGatheringImage from "../../images/food_truck_gathering.jpg";
 import Button from 'react-bootstrap/Button';
 
 function Homepage() {
@@ -57,6 +58,18 @@ function Homepage() {
 
       <div class="delivery_services">
         <img src="https://pbs.twimg.com/media/EDOUHRGXsAAp8lN.jpg" alt="Food Delivery Service Logos"></img>
+      </div>
+
+      <div class="owner_sign_up">
+        <h1>Don't See Your Truck With Us?</h1>
+        <h3>
+          Sign up with us below to add your food truck to our database and reach a base of a million customers.
+        </h3>
+        <Button href="/ownerPage" variant="danger" size="lg" class="plug_button"> SIGN UP </Button>
+      </div>
+
+      <div class="food_truck_gathering">
+        <img src={FoodGatheringImage} alt={"Food truck gathering"} />
       </div>
 
     </div> /* container-fluid div */

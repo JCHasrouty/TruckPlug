@@ -13,9 +13,8 @@ app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
 
-app.use('/api/address', require('./api/address'));
-app.use('/api/truck_name', require('./api/truck_name'));
-app.use('/api/url', require('./api/url'));
+app.use('/api/truck_info', require('./api/truck_info'));
+app.use('/api/truck_details', require('./api/truck_details'));
 // app.use('/api/weather', require('./api/weather'));
 
 // if (ENV === 'production') {

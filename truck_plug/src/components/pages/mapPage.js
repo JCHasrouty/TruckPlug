@@ -1,10 +1,18 @@
 import React, { Component } from 'react';
 import {Map, InfoWindow, Marker, GoogleApiWrapper} from 'google-maps-react';
-//import axios from 'axios';
+import FiveStarRating from "../../images/Five_Star_Rating.png";
+import FourStarRating from "../../images/Four_Star_Rating.png";
+import FourHalfStarRating from "../../images/Four_Half_Star_Rating.png";
+import OneDollar from "../../images/one_coin.png";
+import TwoDollar from "../../images/two_coins.png";
+import ThreeDollar from "../../images/three_coins.png";
+import CreditCard from "../../images/credit_card.jpg";
+import MoneyIcon from "../../images/money.png";
+
 
 const mapStyles = {
     width: '100%',
-    height: '825px'
+    height: '850px'
 };
 
 let geocoder;
@@ -20,97 +28,79 @@ class MapContainer extends Component {
             showingInfoWindow: false,
             activeMarker: {},
             selectedPlace: {},
-            places: [],
-            addressList: [],
+            address: [],
+            city: [],
+            zipcode: [],
+            phone_number: [],
+            payment_type: [],
             truck_name: [],
-            url: []
+            url: [],
+            //add by joey
+            coordinates: [],
+            food_type: [],
+            rating: [],
+            price_range: [],
+            food_suggest: [],
+            star_image: [FiveStarRating]
         }
     }
 
     componentDidMount () {
-        this.plotPoints();
-		this.getTruckName();
-		this.getURL();
+        this.getTruckInfo()
+        this.getTruckDetails();
     }
 
-	getTruckName = () => {
-        fetch('/api/truck_name')
+    getTruckInfo = () => {
+        fetch('/api/truck_info')
             .then(res => res.json())
             .then(res => {
                 var truck_name = res.map(r => r.truck_name);
+                var address = res.map(r => r.address);
+                var city = res.map(r => r.city);
+                var zipcode = res.map(r => r.zipcode);
+                var phone_number = res.map(r => r.phone_number);
+                var payment_type = res.map(r => r.payment_type);
+                var coordinates = res.map(r => r.coordinates);
                 this.setState({truck_name});
+                this.setState({address});
+                this.setState({city});
+                this.setState({zipcode});
+                this.setState({phone_number});
+                this.setState({payment_type});
+                this.setState({coordinates});
             });
-    };
+    }
 
-    getURL = () => {
-        fetch('/api/url')
+    getTruckDetails = () => {
+        fetch('/api/truck_details')
             .then(res => res.json())
             .then(res => {
+                var food_type = res.map(r => r.food_type);
+                var rating = res.map(r => r.rating);
+                var price_range = res.map(r => r.price_range);
+                var food_suggest = res.map(r => r.food_suggest);
                 var url = res.map(r => r.url);
+                this.setState({food_type});
+                this.setState({rating});
+                this.setState({price_range});
+                this.setState({food_suggest});
                 this.setState({url});
             });
     };
 
-    plotPoints () {
-        let places = [];
-        let locationData = [];
-
-        //Fetch address from database...runs from address file in server folder
-        fetch('/api/address')
-            .then(res => res.json())
-            .then(res => {
-                let addressList = res.map(r => r.address);
-                this.setState({addressList});
-                for (let i = 0; i < addressList.length; i++) {
-                    locationData.push(this.findLatLang(addressList[i], geocoder))
-                }
-                //Extracts geocodes from a promise stores it into array
-                Promise.all(locationData)//Do fetch within Promise combine getPoints
-                    .then((returnVals) =>{
-                        returnVals.forEach((latLng) => {
-                            let place = {
-                                latitude: latLng[0],
-                                longitude: latLng[1]
-                            };
-                            places.push(place);
-                        });
-                        //places now populated
-                        this.setState(() => {
-                            return {
-                                places: places
-                            }
-                        });
-
-                    });
-            });
-    }
-
-    findLatLang(address, geocoder) {
-        console.log(address);
-        return new Promise(function(resolve, reject) {
-            geocoder.geocode({
-                'address': address
-            }, function(results, status) {
-                if (status === 'OK') {
-                    console.log(results);
-                    resolve([results[0].geometry.location.lat(), results[0].geometry.location.lng()]);
-                } else {
-                    reject(new Error('Couldnt\'t find the location ' + address));
-                }
-            })
-        })
-    }
-
-    displayMarkers (stores) {
-        return stores.map((place, index) => {
+    displayMarkers () {
+        return this.state.coordinates.map((coordinates, index) => {
             return <Marker key={index} id={index} position={{
-                lat: place.latitude,
-                lng: place.longitude
+                lat: coordinates.x,
+                lng: coordinates.y
             }}
                            onClick={this.onMarkerClick}
                             name={this.state.truck_name[index]}
-							name1={this.state.addressList[index]}
-                            name3={<a href={this.state.url[index]} target="_blank">Yelp</a>}
+                            name1={this.state.address[index]}
+                            name2={this.state.city[index]}
+                            name3={this.state.zipcode[index]}
+                            name4={this.state.phone_number[index]}
+                            name5={<a href={this.state.url[index]} target="_blank">Yelp</a>}
              />
         })
     }
@@ -132,6 +122,83 @@ class MapContainer extends Component {
         }
     };
 
+    //added by joey
+    createSideNav = () => {
+        let side = [];
+
+        for(let i = 0; i < this.state.truck_name.length; i++){
+            let trucks = [];
+            trucks.push(<a href={this.state.url[i]}> {this.state.truck_name[i]} </a>);
+            
+            if(this.state.rating[i] == "5/5"){
+                if(this.state.price_range[i] == "$$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FiveStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FiveStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+            }
+            else if(this.state.rating[i] == "4.5/5"){
+                if(this.state.price_range[i] == "$$$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={ThreeDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={ThreeDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+
+                if(this.state.price_range[i] == "$$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+
+                if(this.state.price_range[i] == "$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={OneDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourHalfStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={OneDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+            }
+            else if(this.state.rating[i] == "4/5"){
+                if(this.state.price_range[i] == "$$$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={ThreeDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={ThreeDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+
+                if(this.state.price_range[i] == "$$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={TwoDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+
+                if(this.state.price_range[i] == "$")
+                    if(this.state.payment_type[i] == "Credit Card")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={OneDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={CreditCard} width="50px"/>} {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+                    if(this.state.payment_type[i] == "Cash Only")
+                    trucks.push(<p><small><b>Food Type:</b> {this.state.food_type[i]} <br /> <b>Rating:</b> {<img src={FourStarRating} width="100px"/>} <br /> <b>Price Range:</b> {<img src={OneDollar} width="100px"/> }
+                    <br /> <b>Payment Type:</b> {<img src={MoneyIcon} width="40px"/>} <br /> <b>First Time Recommendation:</b> {this.state.food_suggest[i]}</small></p>);
+            }
+
+            {/* trucks.push(<p><small><strong>Food Type:</strong> {this.state.food_type[i]} <br /> Rating: {this.state.rating[i]} <br /> Price Range: {<img src={FiveStarRating} width="100px"/> }  */}
+            {/* trucks.push(<p><small><strong>Food Type:</strong> {this.state.food_type[i]} <br /> Rating: {this.state.rating[i]} <br /> Price Range: {<img src={this.state.star_image} width="100px"/> }  */}
+            // <br /> Payment Type: {this.state.payment_type[i]}
+            // <br /> First Time Recommendation: {this.state.food_suggest[i]}</small></p>);
+            side.push(<b2>{trucks}</b2>);
+        }
+        return side;
+    };
+
     render() {
 
         geocoder = new this.props.google.maps.Geocoder();
@@ -140,42 +207,7 @@ class MapContainer extends Component {
             <div id="parent">
 
             <div class="sidenav">
-            <b2>1) Hawaiian Hot Chicken</b2>
-            <p><small>Hawaiian</small></p>
-
-            <b2>2) 405 Teppanyaki</b2>
-            <p><small>Japanese</small></p>
-
-            <b2>3) Birrieria San Marcos</b2>
-            <p><small>Mexican</small></p>
-
-            <b2>4) Keep On Grubbin'</b2>
-            <p><small>Burgers</small></p>
-
-            <b2>5) Chick Stop</b2>
-            <p><small>American</small></p>
-
-            <b2>6) Godfather Truck</b2>
-            <p><small>American</small></p>
-
-            <b2>7) Leos Taco Truck</b2>
-            <p><small>Mexican</small></p>
-
-            <b2>8) Paratta</b2>
-            <p><small>Middle Eastern</small></p>
-
-            <b2>9) Keep On Grubbin</b2>
-            <p><small>American</small></p>
-
-            <b2>10) Fettes Schwein</b2>
-            <p><small>American</small></p>
-
-            <b2>11) Daniels Food Truck</b2>
-            <p><small>Mexican</small></p>
-
-            <b2>12) Mariscos El Sabroso</b2>
-            <p><small>Mexican</small></p>
-
+                {this.createSideNav()}
             </div>
             <div class="main">
             </div>
@@ -191,14 +223,16 @@ class MapContainer extends Component {
                                 lng: this.state.lng
                             }}
                         >
-                            {this.displayMarkers(this.state.places)}
+                            {this.displayMarkers(this.state.coordinates)}
                             <InfoWindow
                                 marker={this.state.activeMarker}
                                 visible={this.state.showingInfoWindow}
                                 onClose={this.onClose}
                             >
                                 <div>{this.state.selectedPlace.name} <br /> {this.state.selectedPlace.name1}
-                                	<br /> {this.state.selectedPlace.name3} </div>
+                                <br />{this.state.selectedPlace.name2 + " CA " + this.state.selectedPlace.name3}
+                                <br />{this.state.selectedPlace.name4}
+                                	<br /> {this.state.selectedPlace.name5} </div>
                             </InfoWindow>
                         </Map>
                 </div>
@@ -209,5 +243,5 @@ class MapContainer extends Component {
 }
 
 export default GoogleApiWrapper({
-    apiKey: ''
+    apiKey: 'AIzaSyBTyNrlporN5pCSZKan4GgSr61wEsEY1GQ'
 })(MapContainer);

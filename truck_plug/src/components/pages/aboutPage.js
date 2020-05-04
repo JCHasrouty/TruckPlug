@@ -33,7 +33,7 @@ function Aboutpage() {
             <div class="about-column-four">
             <img src={AboutImage4} align="center" width="300" height="300"></img>
             <br />
-              <h2>Chun-Yeng Wang (Vince)</h2>
+              <h2>Chun-Yeng Wang (Vincent)</h2>
             </div>
             </div>    
       </div>
